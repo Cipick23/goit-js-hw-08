@@ -1,4 +1,4 @@
-import { throttle } from 'lodash.throttle';
+import throttle from 'lodash.throttle';
 
 
 // Urmăriți evenimentul de input pentru salvarea datelor folosind throttle
