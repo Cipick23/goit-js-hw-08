@@ -1,14 +1,13 @@
 import throttle from 'lodash.throttle';
 
-
-// Urmăriți evenimentul de input pentru salvarea datelor folosind throttle
-emailInput.addEventListener('input', saveDataWithThrottle);
-messageInput.addEventListener('input', saveDataWithThrottle);
-
 const emailInput = document.getElementById('emailInput');
 const messageInput = document.getElementById('messageInput');
 
-// Verificați starea storage-ului la încărcarea paginii
+const saveDataWithThrottle = throttle(saveData, 500);
+
+emailInput.addEventListener('input', saveDataWithThrottle);
+messageInput.addEventListener('input', saveDataWithThrottle);
+
 window.addEventListener('load', () => {
     const savedState = localStorage.getItem('feedback-form-state');
     if (savedState) {
@@ -18,7 +17,6 @@ window.addEventListener('load', () => {
     }
 });
 
-// Ascultați evenimentul de submit al formularului
 const form = document.querySelector('.feedback-form');
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -27,7 +25,6 @@ form.addEventListener('submit', (e) => {
     const data = { email, message };
     console.log(data);
 
-    // Ștergeți câmpurile din local storage după ce ați trimis formularul
     localStorage.removeItem('feedback-form-state');
 });
 
@@ -36,9 +33,5 @@ function saveData() {
     const message = messageInput.value;
     const data = { email, message };
 
-    // Salvați obiectul în local storage
     localStorage.setItem('feedback-form-state', JSON.stringify(data));
 }
-
-// Utilizați throttle pentru a actualiza datele o dată la 500 de milisecunde
-const saveDataWithThrottle = throttle(saveData, 500);
